@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class SetOfTests(models.Model):
@@ -12,6 +16,7 @@ class SetOfTests(models.Model):
 
 
 class Test(models.Model):
+    number = models.IntegerField()
     text = models.TextField(
         verbose_name='Текст вопроса'
     )
@@ -20,6 +25,9 @@ class Test(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Набор тестов'
     )
+
+    class Meta:
+        unique_together = ('number', 'set_of_tests')
 
 
 class Answer(models.Model):
@@ -31,3 +39,15 @@ class Answer(models.Model):
         on_delete=models.CASCADE
     )
     is_rigth = models.BooleanField()
+
+
+class UserResults(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+    set_of_tests = models.ForeignKey(
+        SetOfTests,
+        on_delete=models.CASCADE
+    )
+    count_correct_answer = models.IntegerField()

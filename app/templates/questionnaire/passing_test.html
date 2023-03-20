@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block content %}
+<h3>
+    <p>Вопрос № {{ question.number }}</p>
+</h3>
+<h2>
+    <p>{{ question.text }}</p>
+</h2>
+{% comment %} {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} {% endcomment %}
+
+<form action="{% url 'questionnaire:passing_test' set.pk next_page %}" method="post">
+    {% csrf_token %}
+    {% for answer in answers %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.id }}" />
+        <label for="choice{{ forloop.counter }}">{{ answer.text }}</label><br />
+    {% endfor %}
+    <input type="submit" value="Далее" />
+</form>
+
+{% comment %} <a class="btn btn-primary" href="{% url 'questionnaire:set_page' set.pk %}" role="button">Следующий вопрос</a> {% endcomment %}
+{% endblock %}
