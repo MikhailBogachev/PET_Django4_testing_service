@@ -23,9 +23,14 @@ def set_page(request, set_id):
 
 # @login_required
 def passing_test(request, num_set, num_test):
+    form = request.POST or None
+    if form:
+        print(form['choice'] == right_answer)
     set = SetOfTests.objects.get(pk=num_set)
     question = Test.objects.get(set_of_tests=num_set, number=num_test)
     answers = Answer.objects.filter(test=question)
+    right_answer = Answer.objects.filter(test=question).get(is_rigth=True)
+    print(right_answer.pk)
     next_page = num_test + 1
     context = {
         'question': question,
