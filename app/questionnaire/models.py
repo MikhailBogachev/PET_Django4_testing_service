@@ -50,4 +50,6 @@ class UserResults(models.Model):
         SetOfTests,
         on_delete=models.CASCADE
     )
-    count_correct_answer = models.IntegerField()
+    count_correct_answer = models.IntegerField(
+        default=0
+    )

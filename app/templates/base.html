@@ -10,11 +10,8 @@
     <title>{% block title %}Тесты{% endblock %}</title>
   </head>
   <body>
-    {% include 'includes/header.html' %}
     <main>
-      <div class="container py-5">
-        {% block content %}Контент не позвезли :((({% endblock %}
-      </div>  
+      {% block content %}Контент не позвезли :((({% endblock %}
     </main>
   </body>
 </html>

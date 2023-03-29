@@ -6,5 +6,8 @@
 <p>
     {{ set.description }}
 </p>
+<p>
+    Ваш прошлый результат: {{ result }}
+</p>
 <a class="btn btn-primary" href="{% url 'questionnaire:passing_test' set.pk 1%}" role="button">Начать</a>
 {% endblock %}

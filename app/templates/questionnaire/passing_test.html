@@ -8,10 +8,10 @@
 </h2>
 {% comment %} {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} {% endcomment %}
 
-<form action="{% url 'questionnaire:passing_test' set.pk next_page %}" method="post">
+<form action="{% url 'questionnaire:get_answer' set.pk question.pk %}" method="post">
     {% csrf_token %}
     {% for answer in answers %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.id }}" />
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
         <label for="choice{{ forloop.counter }}">{{ answer.text }}</label><br />
     {% endfor %}
     <input type="submit" value="Далее" />
