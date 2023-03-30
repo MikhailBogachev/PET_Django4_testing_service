@@ -6,9 +6,8 @@
 <h2>
     <p>{{ question.text }}</p>
 </h2>
-{% comment %} {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} {% endcomment %}
 
-<form action="{% url 'questionnaire:get_answer' set.pk question.pk %}" method="post">
+<form action="{% url 'questionnaire:get_answer' num_set question.pk %}" method="post">
     {% csrf_token %}
     {% for answer in answers %}
         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
@@ -16,6 +15,4 @@
     {% endfor %}
     <input type="submit" value="Далее" />
 </form>
-
-{% comment %} <a class="btn btn-primary" href="{% url 'questionnaire:set_page' set.pk %}" role="button">Следующий вопрос</a> {% endcomment %}
 {% endblock %}

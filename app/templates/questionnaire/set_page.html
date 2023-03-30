@@ -7,7 +7,7 @@
     {{ set.description }}
 </p>
 <p>
-    Ваш прошлый результат: {{ result }}
+    Ваш прошлый результат: {{ result }} правильных овтетов из {{ cnt_tests }}
 </p>
 <a class="btn btn-primary" href="{% url 'questionnaire:passing_test' set.pk 1%}" role="button">Начать</a>
 {% endblock %}

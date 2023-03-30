@@ -48,7 +48,8 @@ class UserResults(models.Model):
     )
     set_of_tests = models.ForeignKey(
         SetOfTests,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='results'
     )
     count_correct_answer = models.IntegerField(
         default=0
