@@ -1,0 +1,84 @@
+{% load static %}
+<header>
+  <nav class="navbar navbar-nav">
+    <div class="container">
+       <ul class="nav nav-pills">
+        <li class="nav-item">              
+          <a class="nav-link" href="{% url 'questionnaire:index' %}">
+            На главную
+          </a>
+        </li> 
+        {% comment %}
+        <li class="nav-item">
+          <a class="nav-link 
+            {% if view_name  == 'about:tech' %}
+              active
+            {% endif %}"
+            href="{% url 'about:tech' %}"
+          >
+            Технологии
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item"> 
+          <a class="nav-link
+          {% if view_name  == 'posts:post_create' %}
+            active
+          {% endif %}"
+          href="{% url 'posts:post_create' %}"
+        >
+          Новая запись
+        </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light
+          {% if view_name  == 'users:change_pass' %}
+            active
+          {% endif %}"
+          href="{% url 'users:change_pass' %}"
+          >
+            Изменить пароль
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light
+          {% if view_name  == 'users:logout' %}
+            active
+          {% endif %}"
+          href="{% url 'users:logout' %}"
+          >
+            Выйти
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light">
+            Пользователь: {{ user.username }}
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item"> 
+          <a class="nav-link link-light
+          {% if view_name  == 'users:login' %}
+            active
+          {% endif %}"
+          href="{% url 'users:login' %}"
+          >
+            Войти
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light
+          {% if view_name  == 'users:signup' %}
+            active
+          {% endif %}"
+          href="{% url 'users:signup' %}"
+          >
+            Регистрация
+          </a>
+        </li> 
+        {% endif %}
+        {% endwith %}{% endcomment %}
+      </ul> 
+    </div>
+  </nav>      
+</header>

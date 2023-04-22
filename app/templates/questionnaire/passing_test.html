@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="container">
 <h3>
     <p>Вопрос № {{ question.number }}</p>
 </h3>
@@ -10,9 +11,15 @@
 <form action="{% url 'questionnaire:get_answer' num_set question.pk %}" method="post">
     {% csrf_token %}
     {% for answer in answers %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
-        <label for="choice{{ forloop.counter }}">{{ answer.text }}</label><br />
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
+            <label class="form-check-label" for="choice{{ forloop.counter }}">{{ answer.text }}</label><br />
+        </div>
     {% endfor %}
-    <input type="submit" value="Далее" />
+    <br>
+    <button type="submit" class="btn btn-primary">
+        Далее
+    </button>
 </form>
+</div>
 {% endblock %}

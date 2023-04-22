@@ -1,11 +1,17 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="container">
 <h3>
     <p>Ваш результат: {{ result }}%</p>
 </h3>
 <h2>
-    <p>{{ count_correct_answers }} правильных овтета из {{ count_tests }}</p>
+    {% if count_correct_answers == 1%}
+        <p>{{ count_correct_answers }} правильный ответ из {{ count_tests }}</p>
+    {% else %}
+        <p>{{ count_correct_answers }} правильный ответ из {{ count_tests }}</p>
+    {% endif %}
 </h2>
 
 <a href="{% url 'questionnaire:index' %}">Вернуться на главную</a>
+</div>
 {% endblock %}

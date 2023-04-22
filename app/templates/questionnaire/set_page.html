@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="container">
 <h3>
     <p>{{ set.title }}</p>
 </h3>
@@ -7,7 +8,12 @@
     {{ set.description }}
 </p>
 <p>
-    Ваш прошлый результат: {{ result }} правильных овтетов из {{ cnt_tests }}
+    {% if result == 1 %}
+        Ваш прошлый результат: {{ result }} правильный ответ из {{ cnt_tests }}
+    {% else %}
+        Ваш прошлый результат: {{ result }} правильных ответов из {{ cnt_tests }}
+    {% endif %}
 </p>
 <a class="btn btn-primary" href="{% url 'questionnaire:passing_test' set.pk 1%}" role="button">Начать</a>
+</div>
 {% endblock %}
