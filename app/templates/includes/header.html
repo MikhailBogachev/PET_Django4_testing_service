@@ -3,9 +3,13 @@
   <nav class="navbar navbar-nav">
     <div class="container">
        <ul class="nav nav-pills">
+        {% with request.resolver_match.view_name as view_name %}
         <li class="nav-item">              
-          <a class="nav-link" href="{% url 'questionnaire:index' %}">
-            На главную
+          <a class="nav-link           
+            {% if view_name  == 'questionnaire:index' %}
+              active
+            {% endif %}" href="{% url 'questionnaire:index' %}">
+            Главная
           </a>
         </li> 
         {% comment %}
@@ -19,8 +23,9 @@
             Технологии
           </a>
         </li>
+        {% endcomment %}
         {% if request.user.is_authenticated %}
-        <li class="nav-item"> 
+        {% comment %} <li class="nav-item"> 
           <a class="nav-link
           {% if view_name  == 'posts:post_create' %}
             active
@@ -29,8 +34,8 @@
         >
           Новая запись
         </a>
-        </li>
-        <li class="nav-item"> 
+        </li> {% endcomment %}
+        {% comment %} <li class="nav-item"> 
           <a class="nav-link link-light
           {% if view_name  == 'users:change_pass' %}
             active
@@ -39,25 +44,26 @@
           >
             Изменить пароль
           </a>
-        </li>
+        </li> {% endcomment %}
         <li class="nav-item"> 
-          <a class="nav-link link-light
+          <a class="nav-link
           {% if view_name  == 'users:logout' %}
             active
-          {% endif %}"
+          {% endif %}
+          "
           href="{% url 'users:logout' %}"
           >
             Выйти
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link-light">
+          <a class="nav-link">
             Пользователь: {{ user.username }}
           </a>
         </li>
         {% else %}
         <li class="nav-item"> 
-          <a class="nav-link link-light
+          <a class="nav-link
           {% if view_name  == 'users:login' %}
             active
           {% endif %}"
@@ -67,7 +73,7 @@
           </a>
         </li>
         <li class="nav-item"> 
-          <a class="nav-link link-light
+          <a class="nav-link
           {% if view_name  == 'users:signup' %}
             active
           {% endif %}"
@@ -77,7 +83,7 @@
           </a>
         </li> 
         {% endif %}
-        {% endwith %}{% endcomment %}
+        {% endwith %}
       </ul> 
     </div>
   </nav>      
