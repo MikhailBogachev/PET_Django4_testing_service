@@ -7,7 +7,7 @@ from .models import SetOfTests, Test, Answer, UserResults
 
 def index(request):
     """Главная страница со списком тестов."""
-    set_of_tests = SetOfTests.objects.all()
+    set_of_tests = SetOfTests.objects.annotate(count_tests=Count('set__id'))
     context = {
         'sets': set_of_tests,
     }
@@ -64,16 +64,19 @@ def passing_test(request, num_set, num_test):
 @login_required
 def get_answer(request, num_set, num_test):
     """Механизм принятия ответа и проверки его корректности"""
-    cnt_test = Test.objects.filter(
-        set_of_tests=num_set
-    ).aggregate(Count('id'))['id__count']
+    cnt_tests = Test.objects.filter(
+        set_of_tests=num_set).count()
+    cnt_right_answers = Answer.objects.filter(test=num_test, is_rigth=True).count()
 
     try:
-        answer = Answer.objects.get(pk=request.POST['choice'])
+        answers = Answer.objects.filter(pk=request.POST['choice'])
     except (KeyError, Answer.DoesNotExist):
         return passing_test(request, num_set, num_test)
     else:
-        if answer.is_rigth:
+        if (answers.filter(is_rigth=True).count()
+            == answers.count()
+            == cnt_right_answers
+        ):
             tmp_res = UserResults.objects.get(
                 user=request.user,
                 set_of_tests=num_set
@@ -81,7 +84,7 @@ def get_answer(request, num_set, num_test):
             tmp_res.count_correct_answer += 1
             tmp_res.save()
 
-    if num_test < cnt_test:
+    if num_test < cnt_tests:
         return redirect(f'/passing_test/{num_set}/{num_test + 1}/')
     return redirect(f'/show_result/{num_set}/')
 

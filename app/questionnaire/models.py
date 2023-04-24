@@ -23,7 +23,8 @@ class Test(models.Model):
     set_of_tests = models.ForeignKey(
         SetOfTests,
         on_delete=models.CASCADE,
-        verbose_name='Набор тестов'
+        verbose_name='Набор тестов',
+        related_name='set'
     )
 
     class Meta:
