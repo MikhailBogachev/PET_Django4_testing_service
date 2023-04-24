@@ -14,6 +14,9 @@ class SetOfTests(models.Model):
         verbose_name='Описание теста'
     )
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Test(models.Model):
     number = models.IntegerField()
@@ -29,6 +32,9 @@ class Test(models.Model):
 
     class Meta:
         unique_together = ('number', 'set_of_tests')
+
+    def __str__(self) -> str:
+        return self.text
 
 
 class Answer(models.Model):
