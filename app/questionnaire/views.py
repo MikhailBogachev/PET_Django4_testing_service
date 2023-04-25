@@ -16,7 +16,7 @@ def index(request):
 
 @login_required
 def set_page(request, set_id):
-    """Страница с отдельным тестом с его описанием."""
+    """Страница с отдельным тестом и его описанием."""
     set = get_object_or_404(SetOfTests, pk=set_id)
     cnt_tests = Test.objects.filter(set_of_tests=set).count()
     result = UserResults.objects.get_or_create(
@@ -43,6 +43,7 @@ def passing_test(request, num_set, num_test):
         obj.count_correct_answer = 0
         obj.save()
 
+    has_multiple_answers = SetOfTests.objects.get(pk=num_set).has_multiple_answers
     question = Test.objects.get(
         set_of_tests=num_set,
         number=num_test
@@ -53,6 +54,7 @@ def passing_test(request, num_set, num_test):
         'question': question,
         'num_set': num_set,
         'answers': answers,
+        'has_multiple_answers': has_multiple_answers,
     }
     return render(
         request,
@@ -64,12 +66,13 @@ def passing_test(request, num_set, num_test):
 @login_required
 def get_answer(request, num_set, num_test):
     """Механизм принятия ответа и проверки его корректности"""
-    cnt_tests = Test.objects.filter(
-        set_of_tests=num_set).count()
-    cnt_right_answers = Answer.objects.filter(test=num_test, is_rigth=True).count()
+    tests = Test.objects.filter(set_of_tests=num_set)
+    cnt_tests = tests.count()
+    test = tests.get(number=num_test)
+    cnt_right_answers = Answer.objects.filter(test=test, is_rigth=True).count()
 
     try:
-        answers = Answer.objects.filter(pk=request.POST['choice'])
+        answers = Answer.objects.filter(pk__in=request.POST.getlist('choice'))
     except (KeyError, Answer.DoesNotExist):
         return passing_test(request, num_set, num_test)
     else:

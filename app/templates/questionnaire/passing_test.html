@@ -8,12 +8,19 @@
     <p>{{ question.text }}</p>
 </h2>
 
-<form action="{% url 'questionnaire:get_answer' num_set question.pk %}" method="post">
+<form action="{% url 'questionnaire:get_answer' num_set question.number %}" method="post">
     {% csrf_token %}
     {% for answer in answers %}
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
-            <label class="form-check-label" for="choice{{ forloop.counter }}">{{ answer.text }}</label><br />
+            <input class="form-check-input" 
+            {% if has_multiple_answers %}
+                type="checkbox" 
+            {% else %}
+                type="radio" 
+            {% endif %}            
+            name="choice" id="choice{{ forloop.counter }}" value="{{ answer.pk }}" />
+            <label class="form-check-label" for="choice{{ forloop.counter }}">{{ answer.text }}</label>
+            <br/>
         </div>
     {% endfor %}
     <br>

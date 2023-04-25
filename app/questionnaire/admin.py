@@ -11,7 +11,11 @@ class TestAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     list_display = ('number', 'text', 'set_of_tests',)
     list_editable = ('number',)
-    list_display_links = ('set_of_tests',)
+    list_display_links = ('text',)
 
-admin.site.register(SetOfTests)
+class SetOfTestsAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title', 'has_multiple_answers')
+    list_editable = ('has_multiple_answers',)
+
+admin.site.register(SetOfTests, SetOfTestsAdmin)
 admin.site.register(Test, TestAdmin)

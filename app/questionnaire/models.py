@@ -13,6 +13,9 @@ class SetOfTests(models.Model):
     description = models.TextField(
         verbose_name='Описание теста'
     )
+    has_multiple_answers = models.BooleanField(
+        default=False,
+        verbose_name='Множественный выбор ответов')
 
     def __str__(self) -> str:
         return self.title
