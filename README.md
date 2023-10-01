@@ -1,4 +1,4 @@
-# yatube_project
+# Testing_service
 
 ### Описание
 Django проект - сервис проведения тестирования  
